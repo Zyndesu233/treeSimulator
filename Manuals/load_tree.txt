@@ -1,0 +1,13 @@
+[Info] Manual for help
+
+FORMAT
+[l]oad_[t]ree <index:int> <type:str> <count:int> (<val:int> ...)
+
+DESCRIPTION
+This command initialize a tree with index <index> and load the nodes.
+
+NOTES
+1.  <val> only accepte positive integers.
+    If enter -1 for <val>, it will be treated as a null node.
+2.  Please ensure the tree to be loaded is valid.
+    This function will not do any checking on the tree.

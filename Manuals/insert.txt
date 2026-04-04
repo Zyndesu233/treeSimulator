@@ -1,0 +1,12 @@
+[Info] Manual for insert
+
+FORMAT
+[i]nsert <index:int> <value:int>
+
+DESCRIPTION
+Insert a node with value <value> to tree with index <index>.
+
+NOTE
+1.  Cannot insert to uninitialized tree.
+    Ensure the "new" command is run beforehand.
+2.  Does nothing when attempting to inserting node with existing value.

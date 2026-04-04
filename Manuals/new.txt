@@ -1,0 +1,12 @@
+[Info] Manual for new
+
+FORMAT
+[n]ew <index:int> <tree_type:str>
+
+DESCRIPTION
+Initializes a new tree of type <tree_type> at the specified <index>.
+
+SUPPORTED TYPES
+1.  [avl]_tree
+2.  [b]inary_[s]earch_[t]ree
+3.  [spl]ay_tree

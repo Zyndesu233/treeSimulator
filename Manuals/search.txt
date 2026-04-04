@@ -1,0 +1,7 @@
+[Info] Manual for search
+FORMAT [s]earch <index:int> <value:int>
+
+DESCRIPTION Searches for <value> within the tree at index <index>.
+
+NOTE 1. The simulator will typically output whether the value was found and may provide the path taken or the depth of the node.
+2. Returns a "not found" message if the value is missing or if the tree is uninitialized.

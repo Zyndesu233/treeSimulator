@@ -1,0 +1,23 @@
+[Info] Manual for print
+
+FORMAT
+[p]rint <index:int>
+
+DESCRIPTION
+Displays the current structure of the tree located at index <index>.
+Output "(NULL)" if the tree is empty.
+
+NOTE
+1.  Only works on initialized trees.
+2.  The tree is read from right to left but not top to bottom, e.g. in tree:
+
+  +-13
++-9
+  | +-7
+  | | +-6
+  +-5
+    +-3
+      +-2
+        +-1
+
+    9 is the root with left child 5 and right child 13

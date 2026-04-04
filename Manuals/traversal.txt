@@ -1,0 +1,10 @@
+FORMAT
+[t]raversal <index:int> <type:str>
+
+DESCRIPTION
+Traverses the tree at index <index> using the method specified by <type>.
+
+SUPPORTED TYPES
+1. [in]-order
+2. [pre]-order
+3. [post]-order

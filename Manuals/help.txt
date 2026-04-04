@@ -1,0 +1,17 @@
+[Info] Manual for help
+
+FORMAT
+[h]elp (<command:str>)
+
+DESCRIPTION
+If help command is used without argument, the full command list will be displayed.
+If help command is used with argument <command>, the manul of that command will be displayed.
+
+MANUL CONVENTION
+The format of a command is like this: [c]ommand_name <argument:type> (<optional> ...)
+1.  The branket[] in "command_name" denotes the short form of the command.
+    Either full command or short form is accepted in the simulator
+2.  The symbol "<argument:type>" denotes the argument with corresponding type.
+    "type" is usually "int" or "str".
+3.  The argument falls inside branket() is optional.
+    ... denotes variable amount of arguments.

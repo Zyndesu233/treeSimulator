@@ -1,0 +1,13 @@
+[Info] Manual for insert_many
+
+FORMAT
+[i]nsert_[m]any <index:int> <count:int> (<value:int> ...)
+
+DESCRIPTION
+Inserts multiple nodes into the tree at index <index>.
+The <count> specifies how many values will follow.
+
+NOTE
+1.  The number of <value> arguments provided must match the specified <count>.
+2.  This will not insert values that already exist in the tree.
+3.  The tree at <index> must be initialized using the new command first.

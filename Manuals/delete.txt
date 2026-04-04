@@ -1,0 +1,11 @@
+[Info] Manual for delete
+
+FORMAT
+[d]elete <index:int> <value:int>
+
+DESCRIPTION
+Deletes a node containing <value> from the tree at index <index>.
+
+NOTE
+1.  If the <value> does not exist in the specified tree, the command will report error.
+    "search" command can be run beforehand to check the existence.
