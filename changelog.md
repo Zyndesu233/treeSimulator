@@ -1,4 +1,9 @@
 # Change Log
+## v3.4.1
+Modified Command:
+- LOAD_TREE
+LOAD_TREE now supports Red Black Trees
+
 ## v3.4.0
 The source code is reviewed.
 

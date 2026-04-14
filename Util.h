@@ -19,8 +19,8 @@ void printError(char*);
 
 #define MAX_INT_INPUT_CNT 100
 bool readSubcommand(char**, Command);
-bool readAndParseSubcommandToInt(int*, Command);
-bool readAndParseSubcommandsToInts(int, int[], Command);
+bool readAndParseSubcommandToInt(int* ret, Command caller);
+bool readAndParseSubcommandsToInts(int cnt, int ret[], Command caller);
 bool readAndParseSubcommandToTreeType(TreeType*, Command);
 
 #endif  // UTIL_H

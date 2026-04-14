@@ -213,6 +213,7 @@ void runInsertMany(TreePtr trees[]) {
     printf("[INFO] %d node(s) inserted in Tree(%d).\n", count, index);
 }
 
+
 char buffer[1024] = {0};
 
 static void AVL_print_node(AVLTreeADT t, FILE* o) {
@@ -504,6 +505,66 @@ void runSearch(TreePtr trees[]) {
         printf("[INFO] Node(%d) does not exist in Tree(%d)\n", val, index);
 }
 
+bool loadSPL(TreePtr trees[], int index, int count) {
+    int arr[MAX_INT_INPUT_CNT] = {0};
+    if (!readAndParseSubcommandsToInts(count, arr, LOAD_TREE)) return false;
+    SplayTreeADT nodes[100] = {NULL};
+    for (int i = 0; i < count; i++) {
+        if (arr[i] != -1) {
+            nodes[i] = malloc(sizeof(*nodes[i]));
+            nodes[i]->val = arr[i];
+            nodes[i]->l = nodes[i]->r = nodes[i]->p = NULL;
+
+            if (i > 0) {
+                int pIndex = (i - 1) / 2;
+                nodes[i]->p = nodes[pIndex];
+                if (i % 2 == 1)
+                    nodes[pIndex]->l = nodes[i];
+                else
+                    nodes[pIndex]->r = nodes[i];
+            }
+        }
+    }
+    trees[index]->root = nodes[0];
+    return true;
+}
+
+bool loadRBT(TreePtr trees[], int index, int count) {
+    char* buf;
+    int value[MAX_INT_INPUT_CNT] = {0};
+    bool isRed[MAX_INT_INPUT_CNT] = {0};
+    for(int i=0; i<count; i++) {
+        if(!readAndParseSubcommandToInt(&value[i], LOAD_TREE)) return false;
+        if(!readSubcommand(&buf, LOAD_TREE)) return false;
+        if(strcmp(buf, "r") == 0) isRed[i] = true;
+        else if(strcmp(buf, "b") == 0 || value[i] == -1) isRed[i] = false;
+        else {
+            printError("Unknown tree type");
+            return false;
+        }
+    }
+    RedBlackTreeADT nodes[100] = {NULL};
+    for (int i = 0; i < count; i++) {
+        if (value[i] != -1) {
+            nodes[i] = malloc(sizeof(*nodes[i]));
+            nodes[i]->val = value[i];
+            nodes[i]->isRed = isRed[i];
+            nodes[i]->l = nodes[i]->r = nodes[i]->p = NULL;
+
+            if (i > 0) {
+                int pIndex = (i - 1) / 2;
+                nodes[i]->p = nodes[pIndex];
+                if (i % 2 == 1)
+                    nodes[pIndex]->l = nodes[i];
+                else
+                    nodes[pIndex]->r = nodes[i];
+            }
+        }
+    }
+    trees[index]->root = nodes[0];
+    return true;
+}
+
 void runLoadTree(TreePtr trees[]) {
     int index, count;
     TreeType treeType;
@@ -523,8 +584,6 @@ void runLoadTree(TreePtr trees[]) {
         printf("Run dump_trees to see more details.");
         return;
     }
-    int arr[MAX_INT_INPUT_CNT] = {0};
-    if (!readAndParseSubcommandsToInts(count, arr, LOAD_TREE)) return;
 
     trees[index] = malloc(sizeof(TreePtr));
     trees[index]->type = treeType;
@@ -537,27 +596,10 @@ void runLoadTree(TreePtr trees[]) {
             todo("BST load_tree");
             break;
         case SPL:
-            SplayTreeADT nodes[100] = {NULL};
-            for (int i = 0; i < count; i++) {
-                if (arr[i] != -1) {
-                    nodes[i] = malloc(sizeof(*nodes[i]));
-                    nodes[i]->val = arr[i];
-                    nodes[i]->l = nodes[i]->r = nodes[i]->p = NULL;
-
-                    if (i > 0) {
-                        int pIndex = (i - 1) / 2;
-                        nodes[i]->p = nodes[pIndex];
-                        if (i % 2 == 1)
-                            nodes[pIndex]->l = nodes[i];
-                        else
-                            nodes[pIndex]->r = nodes[i];
-                    }
-                }
-            }
-            trees[index]->root = nodes[0];
+            if(!loadSPL(trees, index, count)) return;
             break;
         case RBT:
-            todo("BST load_tree");
+            if(!loadRBT(trees, index, count)) return;
             break;
         default:
             assert(false && "UNREACHABLE");

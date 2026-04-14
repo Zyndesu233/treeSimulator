@@ -17,6 +17,7 @@ int main() {
     memset(trees, 0, MAX_TREE_NUMBER * sizeof(TreePtr));
     char line[100];
     while (true) {
+        printf("> ");
         fgets(line, 100, stdin);
         if(strcmp(line, "\n") == 0) continue;
         char* command = strtok(line, " \n");
