@@ -1,3 +1,4 @@
+[Info] Manual for traversal
 FORMAT
 [t]raversal <index:int> <type:str>
 

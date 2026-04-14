@@ -1,10 +1,18 @@
 #include "Util.h"
 #include <assert.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
-Command hashCommand(char* command) {
+/**
+ * @name string2command
+ * Convert string to command
+ * @param {char*} command The command in string
+ * @return {Command} The corresponding command
+ */
+
+Command string2command(char* command) {
     assert(COMMAND_NUMBER == 11 && "HAVE NOT EXHAUST ALL COMMAND");
     if (strcmp(command, "quit") == 0 || strcmp(command, "q") == 0)
         return QUIT;
@@ -31,7 +39,13 @@ Command hashCommand(char* command) {
     return UNKNOWN_COMMAND;
 }
 
-char* reverseHashCommand(Command command) {
+/**
+ * @name command2string
+ * Convert command to string
+ * @param {Command} command The command
+ * @return {char*} The corresponding string
+ */
+char* command2string(Command command) {
     assert(COMMAND_NUMBER == 11 && "HAVE NOT EXHAUST ALL COMMAND");
     switch (command) {
         case QUIT:
@@ -72,7 +86,13 @@ Subcommand hashSubcommand(char* subcommand) {
     return UNKNOWN_SUBCOMMAND;
 }
 
-TreeType hashTreeType(char* treeType) {
+/**
+ * @name string2treetype
+ * Convert string to tree type
+ * @param {char*} treeType The tree type
+ * @return {TreeType} The corresponding tree type
+ */
+TreeType string2treetype(char* treeType) {
     assert(TREE_TYPE_NUMBER == 4);
     if (strcmp(treeType, "binary_search_tree") == 0 || strcmp(treeType, "bst") == 0)
         return BST;
@@ -85,7 +105,13 @@ TreeType hashTreeType(char* treeType) {
     return UNKNOWN_TREE_TYPE;
 }
 
-char* reverseHashTreeType(TreeType treeType) {
+/**
+ * @name treetype2string
+ * Convert string to tree type
+ * @param {TreeType} treeType The tree type
+ * @return {char*} The corresponding string
+ */
+char* treetype2string(TreeType treeType) {
     assert(TREE_TYPE_NUMBER == 4);
     switch (treeType) {
         case BST:
@@ -142,7 +168,7 @@ void printCommandFormat(Command command) {
             printf("[s]earch <index:int> <value:int>\n");
             break;
         case LOAD_TREE:
-            printf("[l]oad_[t]ree <index:int> <type:str> <count:int> (<value:int> ...)\n");
+            printf("[l]oad_[t]ree <index:int> <type:str> <node_count:int> (<tree_format> ...)\n");
             break;
         default:
             assert(false && "UNREACHABLE");
@@ -165,29 +191,45 @@ void todo(char* fn) {
 
 /**
  * @name printInfo
- * Print message with format "[INFO] message\n" in terminal.
- * @param {char*} msg The message to print
+ * Print info message like "[INFO] <message_format>" in terminal.
+ * @param {const char*} format The format of the message
  */
-void printInfo(char* msg) {
-    printf("[INFO] %s\n", msg);
+void printInfo(const char* message_format, ...) {
+    va_list args;
+    va_start(args, message_format);
+    printf("[INFO] ");
+    vprintf(message_format, args);
+    va_end(args);
 }
 
 /**
  * @name printWarning
- * Print info with format "[Warning] message" in yellow color in terminal.
- * @param {char*} msg The message to print
+ * Print warnning message like "[WARNING] <message_format>\n" in yellow in terminal.
+ * @param {const char*} format The format of the message
  */
-void printWarning(char* msg) {
-    printf("%s[Warning] %s\n%s", "\x1B[33m", msg, "\x1B[0m");
+void printWarning(const char* message_format, ...) {
+    USE_YELLOW_FONT_COLOR;
+    va_list args;
+    va_start(args, message_format);
+    printf("[Warning] ");
+    vprintf(message_format, args);
+    va_end(args);
+    USE_DEFAULT_FONT_COLOR;
 }
 
 /**
- * @name printError
- * Print message with format "[ERROR] message" in red color in terminal.
- * @param {char*} msg The message to print
+ * @name printWarning
+ * Print error message like "[ERROR] <message_format>\n" in yellow in terminal.
+ * @param {const char*} format The format of the message
  */
-void printError(char* msg) {
-    printf("%s[ERROR] %s\n%s", "\x1B[31m", msg, "\x1B[0m");
+void printError(const char* message_format, ...) {
+    USE_RED_FONT_COLOR;
+    va_list args;
+    va_start(args, message_format);
+    printf("[ERROR] ");
+    vprintf(message_format, args);
+    va_end(args);
+    USE_DEFAULT_FONT_COLOR;
 }
 
 /**
@@ -282,7 +324,7 @@ bool readAndParseSubcommandToTreeType(TreeType* ret, Command caller) {
         printCommandFormat(caller);
         return false;
     }
-    TreeType treeType = hashTreeType(subcommand);
+    TreeType treeType = string2treetype(subcommand);
     if (treeType == UNKNOWN_TREE_TYPE) {
         printError("Invalid argument.");
         printCommandFormat(caller);

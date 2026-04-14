@@ -1,8 +1,28 @@
 # Change Log
+## v4.0.0
+New Utility Command:
+- `string2command`
+- `command2string`
+- `hashSubcommand`
+- `treetype2string`
+- `string2treetype`
+
+Modified Utility Command:
+- `printInfo`
+- `printWarning`
+- `printError`\
+    The above printing helper function now supports string format like `printf`.
+
+Others:
+- `README.md` is updated
+- `build.sh` is updated
+- The CLI is improved
+- New ASCII logo is introduced
+
 ## v3.4.1
 Modified Command:
-- LOAD_TREE
-LOAD_TREE now supports Red Black Trees
+- LOAD_TREE\
+    It supports red black trees now.
 
 ## v3.4.0
 The source code is reviewed.
@@ -49,8 +69,9 @@ New Utility Command:
 New Utility Command:
 - `readAndParseSubcommandToInt`
 
-Deprecated Utility Commands:
-- `parseSubcommandTo2Int`: Equivalent to call `readAndParseSubcommandToInt` twice.
+Removed Utility Commands:
+- `parseSubcommandTo2Int`\
+    It is equivalent to call `readAndParseSubcommandToInt` twice and hence is deprecated.
 
 ## v3.0.0
 The simulator is reconstructed.

@@ -1,13 +1,17 @@
 [Info] Manual for help
 
 FORMAT
-[l]oad_[t]ree <index:int> <type:str> <count:int> (<val:int> ...)
+[l]oad_[t]ree <index:int> <type:str> <node_count:int> (<tree_format> ...)
 
 DESCRIPTION
 This command initialize a tree with index <index> and load the nodes.
 
 NOTES
-1.  <val> only accepte positive integers.
-    If enter -1 for <val>, it will be treated as a null node.
-2.  Please ensure the tree to be loaded is valid.
-    This function will not do any checking on the tree.
+1.  For binary search trees, AVL trees, and splay trees,
+    <tree_format> are non-negative integers representing the value of a node.
+    If the node value is entered -1, it will be treated as a null node.
+2.  For red black trees, <tree_format> are pairs of non-negative integers and a char "r" or "b",
+    representing the value of a node and its color.
+    If the node value is entered -1, it will be treated as a null node and the entered color is ignored.
+3.  Please ensure the tree to be loaded is valid.
+    This command will not do any checking on the tree.
