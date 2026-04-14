@@ -11,7 +11,7 @@ Modified Utility Command:
 - `printInfo`
 - `printWarning`
 - `printError`\
-    The above printing helper function now supports string format like `printf`.
+    The above printing helper functions now support string format like `printf`.
 
 Others:
 - `README.md` is updated
