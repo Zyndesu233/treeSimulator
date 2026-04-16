@@ -130,6 +130,31 @@ char* treetype2string(TreeType treeType) {
 }
 
 /**
+ * @name setFontColor
+ * Set the font color of texts in the terminal.
+ * Have to call setFontColor(DEFAULT) to reset the color after use.
+ * @param {FontColor} color The font color
+ */
+
+void setFontColor(FontColor color) {
+    assert(COLOR_NUMBER == 11 && "HAVE NOT EXHAUST ALL COMMAND");
+    switch (color) {
+        case YELLOW:
+            printf("\x1B[33m");
+            break;
+        case RED:
+            printf("\x1B[31m");
+            break;
+        case WHITE:
+            printf("\x1B[37m");
+            break;
+        default:
+            printf("\x1B[0m");
+            break;
+    }
+}
+
+/**
  * @name printCommandFormat
  * Print the corresponding command format to the terminal.
  * @param {Command} command The command name
@@ -177,19 +202,6 @@ void printCommandFormat(Command command) {
 }
 
 /**
- * @name todo
- * Place holder for function to be implemented.
- * Print warning message in terminal.
- * The program is NOT halt.
- * @param {char*} fn The name of the function to be implemented
- */
-
-void todo(char* fn) {
-    printf("[WARNING] %s has not be implemented.\n", fn);
-    printf("Pull requests are welcomed!");
-}
-
-/**
  * @name printInfo
  * Print info message like "[INFO] <message_format>" in terminal.
  * @param {const char*} format The format of the message
@@ -204,32 +216,50 @@ void printInfo(const char* message_format, ...) {
 
 /**
  * @name printWarning
- * Print warnning message like "[WARNING] <message_format>\n" in yellow in terminal.
+ * Print warnning message like "[WARNING] <message_format>" in yellow in terminal.
  * @param {const char*} format The format of the message
  */
 void printWarning(const char* message_format, ...) {
-    USE_YELLOW_FONT_COLOR;
+    setFontColor(YELLOW);
     va_list args;
     va_start(args, message_format);
     printf("[Warning] ");
     vprintf(message_format, args);
     va_end(args);
-    USE_DEFAULT_FONT_COLOR;
+    setFontColor(DEFAULT);
 }
 
 /**
  * @name printWarning
- * Print error message like "[ERROR] <message_format>\n" in yellow in terminal.
+ * Print error message like "[ERROR] <message_format>" in yellow in terminal.
  * @param {const char*} format The format of the message
  */
 void printError(const char* message_format, ...) {
-    USE_RED_FONT_COLOR;
+    setFontColor(RED);
     va_list args;
     va_start(args, message_format);
     printf("[ERROR] ");
     vprintf(message_format, args);
     va_end(args);
-    USE_DEFAULT_FONT_COLOR;
+    setFontColor(DEFAULT);
+}
+
+/**
+ * @name todo
+ * Place holder for feature not yet implemented.
+ * Print warning message in terminal when attempting to use the feature.
+ * The program does NOT halt when calling this function.
+ * @param {const char*} format The format of the message
+ */
+
+void todo(const char* message_format, ...) {
+    printWarning("This feature has not be implemented.\n");
+    va_list args;
+    va_start(args, message_format);
+    printf("[TODO] ");
+    vprintf(message_format, args);
+    va_end(args);
+    printf("Pull requests are welcomed!\n");
 }
 
 /**

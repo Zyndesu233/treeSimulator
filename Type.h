@@ -41,4 +41,13 @@ typedef struct {
 typedef Tree* TreePtr;
 
 #define MAX_TREE_NUMBER 10
+
+typedef enum {
+    YELLOW = 0,
+    RED,
+    WHITE,
+    COLOR_NUMBER,
+    DEFAULT
+} FontColor;
+
 #endif  // TYPE_H_

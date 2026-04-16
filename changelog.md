@@ -1,4 +1,18 @@
+# Todos
+- Memory alloc system for trees
+- Support B-trees
+
 # Change Log
+## v4.1.0
+New Utility Command:
+- `setFontColor`\
+    Allow deveoper to set terminal text color.
+- `todo`
+
+Others:
+- `build.sh` is updated\
+    `-r` flag is introduced for build and run
+
 ## v4.0.0
 New Utility Command:
 - `string2command`
