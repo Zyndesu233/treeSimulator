@@ -8,7 +8,9 @@ Some functions are not yet implemented. Pull requests are welcomed.
 ## How to Run?
 1. Run `./build.sh` to build the project.
 2. Run `./treeSimulator` to start the simulator.
+
 OR
+
 1. Run `./build.sh -r` to build and run the simulator.
 
 ## How to get started?
