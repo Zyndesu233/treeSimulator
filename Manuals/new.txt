@@ -1,7 +1,7 @@
 [Info] Manual for new
 
 FORMAT
-[n]ew <index:int> <tree_type:str>
+[n]ew <tree_type:str>
 
 DESCRIPTION
 Initializes a new tree of type <tree_type> at the specified <index>.

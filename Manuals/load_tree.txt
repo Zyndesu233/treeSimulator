@@ -1,7 +1,7 @@
 [Info] Manual for help
 
 FORMAT
-[l]oad_[t]ree <index:int> <type:str> <node_count:int> (<tree_format> ...)
+[l]oad_[t]ree <type:str> <node_count:int> (<tree_format> ...)
 
 DESCRIPTION
 This command initialize a tree with index <index> and load the nodes.

@@ -1,5 +1,6 @@
 #ifndef TYPE_H_
 #define TYPE_H_
+#include <stdlib.h>
 typedef enum {
     QUIT = 0,
     HELP,
@@ -9,7 +10,7 @@ typedef enum {
     DELETE,
     TRAVERSAL,
     NEW,
-    DUMP_TREES,
+    DUMP_FOREST,
     SEARCH,
     LOAD_TREE,
     COMMAND_NUMBER,
@@ -40,8 +41,6 @@ typedef struct {
 
 typedef Tree* TreePtr;
 
-#define MAX_TREE_NUMBER 10
-
 typedef enum {
     YELLOW = 0,
     RED,
@@ -49,5 +48,13 @@ typedef enum {
     COLOR_NUMBER,
     DEFAULT
 } FontColor;
+
+typedef struct {
+    TreePtr* items;
+    size_t count;
+    size_t capacity;
+} Forest;
+
+typedef Forest* ForestPtr;
 
 #endif  // TYPE_H_

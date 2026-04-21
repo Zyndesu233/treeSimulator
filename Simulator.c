@@ -18,18 +18,17 @@ int main() {
     );
     printf("\n");
     printf("Author: K1tsune233\n");
-    printf("Version: 4.1.0\n");
+    printf("Version: 5.0.0\n");
     printf("\n");
 
-    TreePtr trees[MAX_TREE_NUMBER];
-    memset(trees, 0, MAX_TREE_NUMBER * sizeof(TreePtr));
+    Forest forest = {0};
+
     char line[100];
     while (true) {
         printf("> ");
         fgets(line, 100, stdin);
         if (strcmp(line, "\n") == 0) continue;
         char* command = strtok(line, " \n");
-        // printf("[DEBUG] command = |%s|\n", command);
 
         assert(COMMAND_NUMBER == 11);
         switch (string2command(command)) {
@@ -41,31 +40,31 @@ int main() {
                 runHelp();
                 break;
             case INSERT:
-                runInsert(trees);
+                runInsert(&forest);
                 break;
             case INSERT_MANY:
-                runInsertMany(trees);
+                runInsertMany(&forest);
                 break;
             case PRINT:
-                runPrint(trees);
+                runPrint(&forest);
                 break;
             case DELETE:
-                runDelete(trees);
+                runDelete(&forest);
                 break;
             case TRAVERSAL:
-                runTraversal(trees);
+                runTraversal(&forest);
                 break;
             case NEW:
-                runNew(trees);
+                runNew(&forest);
                 break;
-            case DUMP_TREES:
-                runDumpTrees(trees);
+            case DUMP_FOREST:
+                runDumpForest(&forest);
                 break;
             case SEARCH:
-                runSearch(trees);
+                runSearch(&forest);
                 break;
             case LOAD_TREE:
-                runLoadTree(trees);
+                runLoadTree(&forest);
                 break;
             default:
                 printError("Unknown command.\n");

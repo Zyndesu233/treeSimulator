@@ -25,6 +25,18 @@ void todo(const char* message_format, ...);
 bool readSubcommand(char**, Command);
 bool readAndParseSubcommandToInt(int* ret, Command caller);
 bool readAndParseSubcommandsToInts(int cnt, int ret[], Command caller);
+bool readAndParseSubcommandToSize(size_t* ret, Command caller);
 bool readAndParseSubcommandToTreeType(TreeType*, Command);
+
+// Macros for dynammic array
+#define da_append(da, item)\
+do {\
+    if((da).count >= (da).capacity) {\
+        if((da).capacity == 0) (da).capacity = 256;\
+        else (da).capacity *= 2;\
+        (da).items = realloc((da).items, (da).capacity*sizeof(*(da).items));\
+    }\
+    (da).items[(da).count++] = item;\
+} while (0)
 
 #endif  // UTIL_H

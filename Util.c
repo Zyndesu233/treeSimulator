@@ -30,8 +30,8 @@ Command string2command(char* command) {
         return TRAVERSAL;
     else if (strcmp(command, "new") == 0 || strcmp(command, "n") == 0)
         return NEW;
-    else if (strcmp(command, "dump_trees") == 0 || strcmp(command, "dt") == 0)
-        return DUMP_TREES;
+    else if (strcmp(command, "dump_forest") == 0 || strcmp(command, "dt") == 0)
+        return DUMP_FOREST;
     else if (strcmp(command, "search") == 0 || strcmp(command, "s") == 0)
         return SEARCH;
     else if (strcmp(command, "load_tree") == 0 || strcmp(command, "lt") == 0)
@@ -64,7 +64,7 @@ char* command2string(Command command) {
             return "traversal";
         case NEW:
             return "new";
-        case DUMP_TREES:
+        case DUMP_FOREST:
             return "dump_trees";
         case SEARCH:
             return "search";
@@ -137,7 +137,7 @@ char* treetype2string(TreeType treeType) {
  */
 
 void setFontColor(FontColor color) {
-    assert(COLOR_NUMBER == 11 && "HAVE NOT EXHAUST ALL COMMAND");
+    assert(COLOR_NUMBER == 3 && "HAVE NOT EXHAUST ALL COMMAND");
     switch (color) {
         case YELLOW:
             printf("\x1B[33m");
@@ -184,16 +184,16 @@ void printCommandFormat(Command command) {
             printf("[t]raversal <index:int> <type:str>\n");
             break;
         case NEW:
-            printf("[n]ew <index:int> <tree_type:str>\n");
+            printf("[n]ew <tree_type:str>\n");
             break;
-        case DUMP_TREES:
+        case DUMP_FOREST:
             printf("[d]ump_[t]rees\n");
             break;
         case SEARCH:
             printf("[s]earch <index:int> <value:int>\n");
             break;
         case LOAD_TREE:
-            printf("[l]oad_[t]ree <index:int> <type:str> <node_count:int> (<tree_format> ...)\n");
+            printf("[l]oad_[t]ree <type:str> <node_count:int> (<tree_format> ...)\n");
             break;
         default:
             assert(false && "UNREACHABLE");
@@ -339,6 +339,30 @@ bool readAndParseSubcommandsToInts(int cnt, int ret[], Command caller) {
 }
 
 /**
+ * @name readAndParseSubcommandToSize
+ * This function reads 1 subcommand from terminal, parse it to size_t and saves it.
+ * Existence check and type check are made, but no further checking is done.
+ * Print error message in terminal if failed.
+ * @param {size_t*} ret The return address of parsed interger
+ * @param {Command} caller The command name of the caller
+ * @return {bool} Success or not
+ */
+bool readAndParseSubcommandToSize(size_t* ret, Command caller) {
+    char* subcommand = strtok(NULL, " \n");
+    if (!subcommand) {
+        printError("Insufficient argument.");
+        printCommandFormat(caller);
+        return false;
+    }
+    if (!sscanf(subcommand, "%zu", ret)) {
+        printError("Invalid argument.");
+        printCommandFormat(caller);
+        return false;
+    }
+    return true;
+}
+
+/**
  * @name readAndParseSubcommandToInt
  * This function reads 1 subcommands from terminal, parse it to TreeType and saves it.
  * Existence check and type check are made, but no further checking is done.
@@ -350,7 +374,7 @@ bool readAndParseSubcommandsToInts(int cnt, int ret[], Command caller) {
 bool readAndParseSubcommandToTreeType(TreeType* ret, Command caller) {
     char* subcommand = strtok(NULL, " \n");
     if (!subcommand) {
-        printError("Insufficient argument.");
+        printError("Insufficient argument.\n");
         printCommandFormat(caller);
         return false;
     }

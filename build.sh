@@ -1,11 +1,14 @@
 #!/bin/bash
+CC=gcc
+CFLAGS="-Wall -Wextra"
+
 while getopts "r" FLAG; do
     case "$FLAG" in 
     r)
-        gcc Simulator.c Util.c Commands.c ./ADTs/*.c -o treeSimulator -Wall -Wextra && ./treeSimulator
+        $CC Simulator.c Util.c Commands.c ./ADTs/*.c -o treeSimulator $CFLAGS && ./treeSimulator
         ;;
     *)
-        gcc Simulator.c Util.c Commands.c ./ADTs/*.c -o treeSimulator -Wall -Wextra
+        $CC Simulator.c Util.c Commands.c ./ADTs/*.c -o treeSimulator $CFLAGS
         ;;
     esac
 done

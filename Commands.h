@@ -2,13 +2,13 @@
 #define COMMANDS_H_
 #include "Type.h"
 void runHelp();
-void runInsert(TreePtr[]);
-void runInsertMany(TreePtr[]);
-void runPrint(TreePtr[]);
-void runDelete(TreePtr[]);
-void runTraversal(TreePtr[]);
-void runNew(TreePtr[]);
-void runDumpTrees(TreePtr[]);
-void runSearch(TreePtr[]);
-void runLoadTree(TreePtr[]);
+void runInsert(ForestPtr forestPtr);
+void runInsertMany(ForestPtr forestPtr);
+void runPrint(ForestPtr forestPtr);
+void runDelete(ForestPtr forestPtr);
+void runTraversal(ForestPtr forestPtr);
+void runNew(ForestPtr forestPtr);
+void runDumpForest(ForestPtr forestPtr);
+void runSearch(ForestPtr forestPtr);
+void runLoadTree(ForestPtr forestPtr);
 #endif

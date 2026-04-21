@@ -1,10 +1,22 @@
 # Todos
-- Memory alloc system for trees
 - Support B-trees
+- Compile mode for checking
 
 # Change Log
+## v5.0.0
+Dynamic array is used as memory allocation system for trees.
+
+Modified Commands:
+- NEW
+- LOAD_TREE
+
+The above commands adapt the new memory allocation system and no longer takes index as arguments.
+
+New Utility Commands:
+- `readAndParseSubcommandToSize`
+
 ## v4.1.0
-New Utility Command:
+New Utility Commands:
 - `setFontColor`\
     Allow deveoper to set terminal text color.
 - `todo`
@@ -14,18 +26,19 @@ Others:
     `-r` flag is introduced for build and run
 
 ## v4.0.0
-New Utility Command:
+New Utility Commands:
 - `string2command`
 - `command2string`
 - `hashSubcommand`
 - `treetype2string`
 - `string2treetype`
 
-Modified Utility Command:
+Modified Utility Commands:
 - `printInfo`
 - `printWarning`
-- `printError`\
-    The above printing helper functions now support string format like `printf`.
+- `printError`
+
+The above printing helper functions now support string format like `printf`.
 
 Others:
 - `README.md` is updated
@@ -44,7 +57,7 @@ The source code is reviewed.
 New Tree Supported:
 - Red Black Tree
 
-New Utility Command:
+New Utility Commands:
 - `printInfo`
 - `printWarning`
 - `printError`
