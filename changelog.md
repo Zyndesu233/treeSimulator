@@ -3,10 +3,25 @@
 - Compile mode for checking
 
 # Change Log
+## v5.1.0
+Factor out input handling from command simulation.
+
+Modified Commands:
+- HELP
+- INSERT
+- INSERT_MANY
+- PRINT
+- NEW
+- DUMP_FOREST
+- SEARCH\
+    SEARCH command for red black tree is implemented.
+
 ## v5.0.0
 Dynamic array is used as memory allocation system for trees.
 
 Modified Commands:
+- DUMP_FOREST\
+    DUMP_TREES is renamed to DUMP_FOREST.
 - NEW
 - LOAD_TREE
 

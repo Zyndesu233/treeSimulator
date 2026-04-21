@@ -6,12 +6,20 @@ Now supports binary search trees, AVL trees, splay trees and red black trees.
 Some functions are not yet implemented. Pull requests are welcomed.
 
 ## How to Run?
-1. Run `./build.sh` to build the project.
-2. Run `./treeSimulator` to start the simulator.
+### Building the project:
+```bash
+./build.sh
+```
 
-OR
+### Run as simulator
+```bash
+./build.sh -r
+```
 
-1. Run `./build.sh -r` to build and run the simulator.
+### Run with input file
+```bash
+./build -c inputFile
+```
 
 ## How to get started?
 1. Run `h` or `help` in the simulator to display the whole command list.

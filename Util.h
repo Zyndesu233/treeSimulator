@@ -19,6 +19,7 @@ void printInfo(const char* message_format, ...);
 void printWarning(const char* message_format, ...);
 void printError(const char* message_format, ...);
 void todo(const char* message_format, ...);
+void printWelcomeMsg(char* version);
 
 // Command line reading helper functions
 #define MAX_INT_INPUT_CNT 100

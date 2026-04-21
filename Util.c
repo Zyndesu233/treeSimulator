@@ -30,7 +30,7 @@ Command string2command(char* command) {
         return TRAVERSAL;
     else if (strcmp(command, "new") == 0 || strcmp(command, "n") == 0)
         return NEW;
-    else if (strcmp(command, "dump_forest") == 0 || strcmp(command, "dt") == 0)
+    else if (strcmp(command, "dump_forest") == 0 || strcmp(command, "df") == 0)
         return DUMP_FOREST;
     else if (strcmp(command, "search") == 0 || strcmp(command, "s") == 0)
         return SEARCH;
@@ -263,6 +263,27 @@ void todo(const char* message_format, ...) {
 }
 
 /**
+ * @name printWelcomeMsg
+ * Print welcome message.
+ * @param {const char*} version The current version of simulator
+ */
+void printWelcomeMsg(char* version) {
+    printf(
+        "  /\\   _______              _____ _                 _       _             \n"
+        " /**\\ |__   __|            / ____(_)               | |     | |            \n"
+        "/****\\   | |_ __ ___  ___ | (___  _ _ __ ___  _   _| | __ _| |_ ___  _ __ \n"
+        "  ||     | | '__/ _ \\/ _ \\ \\___ \\| | '_ ` _ \\| | | | |/ _` | __/ _ \\| '__|\n"
+        "  ||     | | | |  __/  __/ ____) | | | | | | | |_| | | (_| | || (_) | |   \n"
+        "  ||     |_|_|  \\___|\\___||_____/|_|_| |_| |_|\\__,_|_|\\__,_|\\__\\___/|_|   \n"
+        "\n"
+        "Author: Zyndesu233\n"
+        "Version: %s\n"
+        "\n",
+        version
+    );
+}
+
+/**
  * @name readSubcommand
  * This function reads 1 subcommands from terminal.
  * Existence check is made, but no further checking is done.
@@ -294,12 +315,12 @@ bool readSubcommand(char** ret, Command caller) {
 bool readAndParseSubcommandToInt(int* ret, Command caller) {
     char* subcommand = strtok(NULL, " \n");
     if (!subcommand) {
-        printError("Insufficient argument.");
+        printError("Insufficient argument.\n");
         printCommandFormat(caller);
         return false;
     }
     if (!sscanf(subcommand, "%d", ret)) {
-        printError("Invalid argument.");
+        printError("Invalid argument.\n");
         printCommandFormat(caller);
         return false;
     }
@@ -325,12 +346,12 @@ bool readAndParseSubcommandsToInts(int cnt, int ret[], Command caller) {
     for (int i = 0; i < cnt; i++) {
         char* subcommand = strtok(NULL, " \n");
         if (!subcommand) {
-            printError("Insufficient argument.");
+            printError("Insufficient argument.\n");
             printCommandFormat(caller);
             return false;
         }
         if (sscanf(subcommand, "%d", &ret[i]) != 1) {
-            printError("Invalid argument (not an integer).");
+            printError("The argument entered is not an integer.\n");
             printCommandFormat(caller);
             return false;
         }

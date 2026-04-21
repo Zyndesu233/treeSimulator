@@ -101,3 +101,8 @@ RedBlackTreeADT Red_Black_Insert(RedBlackTreeADT t, int val) {
     t->isRed = false;  // Root must always be Black
     return t;
 }
+
+bool Red_Black_Find(RedBlackTreeADT t, int val) {
+    if(t->val == val) return true;
+    return Red_Black_Find(t->l, val) || Red_Black_Find(t->r, val);
+}

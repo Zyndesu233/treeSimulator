@@ -9,9 +9,8 @@
 #include "ADTs/SplayTree.h"
 #include "Util.h"
 
-void runHelp() {
-    char* subcommand = strtok(NULL, " \n");
-    if (!subcommand) {
+void runHelp(char* manualPage) {
+    if (manualPage == NULL) {
         printf("[INFO] Printing command list:\n");
         for (int i = 0; i < COMMAND_NUMBER; i++) {
             printf("%2d. ", i + 1);
@@ -22,9 +21,9 @@ void runHelp() {
         return;
     }
 
-    printWarning("The manuals is not completed yet.");
+    printWarning("Some of the manuals is not completed yet.\n");
     char filePath[] = "Manuals/";
-    strcat(filePath, command2string(string2command(subcommand)));
+    strcat(filePath, command2string(string2command(manualPage)));
     strcat(filePath, ".txt");
     FILE* manul = fopen(filePath, "r");
     if (!manul) {
@@ -125,79 +124,56 @@ void runTraversal(ForestPtr forest) {
     printf("\n");
 }
 
-void runInsert(ForestPtr forest) {
-    int index, val;
-    if (!readAndParseSubcommandToInt(&index, INSERT) || !readAndParseSubcommandToInt(&val, INSERT)) {
-        return;
-    }
-
-    if (index >= forest->count) {
-        printError("Tree with index %d not found\n", index);
-        return;
-    }
-
+void runInsert(ForestPtr forestPtr, size_t index, int val) {
     assert(TREE_TYPE_NUMBER == 4 && "HAVE NOT EXHAUST ALL TREE TYPES");
-    switch (forest->items[index]->type) {
+    switch (forestPtr->items[index]->type) {
         case AVL:
-            forest->items[index]->root = AVLInsertNode(NewTreeNode(val), forest->items[index]->root);
+            forestPtr->items[index]->root = AVLInsertNode(NewTreeNode(val), forestPtr->items[index]->root);
             break;
         case BST:
-            forest->items[index]->root = InsertNode(forest->items[index]->root, NewTreeNode(val));
+            forestPtr->items[index]->root = InsertNode(forestPtr->items[index]->root, NewTreeNode(val));
             break;
         case SPL:
-            forest->items[index]->root = Splay_Insert(forest->items[index]->root, val);
+            forestPtr->items[index]->root = Splay_Insert(forestPtr->items[index]->root, val);
             break;
         case RBT:
-            forest->items[index]->root = Red_Black_Insert(forest->items[index]->root, val);
+            forestPtr->items[index]->root = Red_Black_Insert(forestPtr->items[index]->root, val);
             break;
         default:
-            assert(false && "[ERROR] UNREACHABLE\n");
+            assert(false && "UNREACHABLE");
             break;
     }
-    printf("[INFO] TreeNode(%d) inserted in Tree(%d).\n", val, index);
+    printf("[INFO] Node %d is inserted in tree %zu.\n", val, index);
 }
 
-void runInsertMany(ForestPtr forest) {
-    int index, count;
-    if (!readAndParseSubcommandToInt(&index, INSERT_MANY) || !readAndParseSubcommandToInt(&count, INSERT_MANY)) {
-        return;
-    }
-
-    if (index >= forest->count) {
-        printError("Tree with index %d not found\n", index);
-        return;
-    }
-
-    int arr[MAX_INT_INPUT_CNT] = {0};
-    if (!readAndParseSubcommandsToInts(count, arr, INSERT_MANY)) return;
-
+void runInsertMany(ForestPtr forestPtr, size_t index, int count, int vals[]) {
     assert(TREE_TYPE_NUMBER == 4);
-    switch (forest->items[index]->type) {
+    switch (forestPtr->items[index]->type) {
         case AVL:
             for (int i = 0; i < count; i++) {
-                forest->items[index]->root = AVLInsertNode(NewTreeNode(arr[i]), forest->items[index]->root);
+                forestPtr->items[index]->root = AVLInsertNode(NewTreeNode(vals[i]), forestPtr->items[index]->root);
             }
             break;
         case BST:
             for (int i = 0; i < count; i++) {
-                forest->items[index]->root = InsertNode(forest->items[index]->root, NewTreeNode(arr[i]));
+                forestPtr->items[index]->root = InsertNode(forestPtr->items[index]->root, NewTreeNode(vals[i]));
             }
             break;
         case SPL:
             for (int i = 0; i < count; i++) {
-                forest->items[index]->root = Splay_Insert(forest->items[index]->root, arr[i]);
+                forestPtr->items[index]->root = Splay_Insert(forestPtr->items[index]->root, vals[i]);
             }
             break;
         case RBT:
             for (int i = 0; i < count; i++) {
-                forest->items[index]->root = Red_Black_Insert(forest->items[index]->root, arr[i]);
+                forestPtr->items[index]->root = Red_Black_Insert(forestPtr->items[index]->root, vals[i]);
             }
             break;
         default:
-            assert(false && "[ERROR] UNREACHABLE\n");
+            assert(false && "UNREACHABLE");
             break;
     }
-    printf("[INFO] %d node(s) inserted in Tree(%d).\n", count, index);
+    printf("[INFO] %d node(s) is/are inserted in tree %zu.\n", count, index);
 }
 
 char buffer[1024] = {0};
@@ -292,42 +268,29 @@ static void RBT_print_subtree(RedBlackTreeADT t,
     }
 }
 
-void runPrint(ForestPtr forest) {
-    int index;
-    if (!readAndParseSubcommandToInt(&index, PRINT)) return;
-    if (index >= forest->count) {
-        printError("Tree with index %d not found\n", index);
+void runPrint(ForestPtr forestPtr, size_t index, FILE* outputStream) {
+    printInfo("Printing tree with index %zu.\n", index);
+    if (forestPtr->items[index]->root == NULL) {
+        printf("(Empty Tree)\n");
         return;
     }
 
-    printf("[INFO] Printing Tree(%d):\n", index);
     assert(TREE_TYPE_NUMBER == 4 && "HAVE NOT EXHAUST ALL TREE TYPES");
-    switch (forest->items[index]->type) {
+    switch (forestPtr->items[index]->type) {
         case AVL:
-            if (forest->items[index]->root == NULL)
-                printf("(Empty Tree)\n");
-            else
-                AVL_print_subtree(forest->items[index]->root, stdout, "  ", "  ", buffer, sizeof buffer);
+            AVL_print_subtree(forestPtr->items[index]->root, outputStream, "  ", "  ", buffer, sizeof(buffer));
             break;
         case BST:
-            if (forest->items[index]->root == NULL)
-                printf("(Empty Tree)\n");
-            else
-                BST_print_subtree(forest->items[index]->root, stdout, "  ", "  ", buffer, sizeof buffer);
+            BST_print_subtree(forestPtr->items[index]->root, outputStream, "  ", "  ", buffer, sizeof(buffer));
             break;
         case SPL:
-            if (forest->items[index]->root == NULL)
-                printf("(Empty Tree)\n");
-            else
-                SPL_print_subtree(forest->items[index]->root, stdout, "  ", "  ", buffer, sizeof buffer);
+            SPL_print_subtree(forestPtr->items[index]->root, outputStream, "  ", "  ", buffer, sizeof(buffer));
             break;
         case RBT:
-            if (forest->items[index]->root == NULL)
-                printf("(Empty Tree)\n");
-            else
-                RBT_print_subtree(forest->items[index]->root, stdout, "  ", "  ", buffer, sizeof buffer);
+            RBT_print_subtree(forestPtr->items[index]->root, outputStream, "  ", "  ", buffer, sizeof(buffer));
             break;
         default:
+            assert(false && "Unreachable");
             break;
     }
 }
@@ -366,105 +329,95 @@ void runDelete(ForestPtr forest) {
     }
 }
 
-void runNew(ForestPtr forest) {
-    TreeType treeType;
-
-    if (!readAndParseSubcommandToTreeType(&treeType, NEW)) return;
-    da_append(*forest, (TreePtr)malloc(sizeof(Tree)));
-    int index = forest->count - 1;
+void runNew(ForestPtr forestPtr, TreeType treeType) {    
+    da_append(*forestPtr, (TreePtr)malloc(sizeof(Tree)));
+    int index = forestPtr->count - 1;
 
     assert(TREE_TYPE_NUMBER == 4 && "HAVE NOT EXHAUST ALL TREE TYPES");
     switch (treeType) {
         case AVL:
-            forest->items[index]->type = AVL;
-            forest->items[index]->root = EmptyAVLTree();
+            forestPtr->items[index]->type = AVL;
+            forestPtr->items[index]->root = EmptyAVLTree();
             break;
         case BST:
-            forest->items[index]->type = BST;
-            forest->items[index]->root = EmptyBinaryTree();
+            forestPtr->items[index]->type = BST;
+            forestPtr->items[index]->root = EmptyBinaryTree();
             break;
         case SPL:
-            forest->items[index]->type = SPL;
-            forest->items[index]->root = NULL;
+            forestPtr->items[index]->type = SPL;
+            forestPtr->items[index]->root = NULL;
             break;
         case RBT:
-            forest->items[index]->type = RBT;
-            forest->items[index]->root = NULL;
+            forestPtr->items[index]->type = RBT;
+            forestPtr->items[index]->root = NULL;
             break;
         default:
             assert(false && "UNREACHABLE");
             return;
     }
-    printf("[INFO] A new %s labeled as index %d is created.\n", treetype2string(treeType), index);
+    printf("[INFO] A new %s with index %d is created.\n", treetype2string(treeType), index);
 }
 
-void runDumpForest(ForestPtr forest) {
-    if(forest->count == 0) {
-        printInfo("There is no tree.\n");
+void runDumpForest(ForestPtr forestPtr) {
+    printInfo("Printing forest.");
+    if (forestPtr->count == 0) {
+        printf("(Empty forest)\n");
         return;
-    } 
+    }
 
-    printInfo("Printing all tree info:\n");
-    for (size_t i = 0; i < forest->count; i++) {
-        if (forest->items[i]->root == NULL)
-            printf("Trees(%zu) is a empty %s\n", i, treetype2string(forest->items[i]->type));
+    for (size_t i = 0; i < forestPtr->count; i++) {
+        if (forestPtr->items[i]->root == NULL)
+            printf("Tree %zu is a empty %s\n", i, treetype2string(forestPtr->items[i]->type));
         else {
             int rootVal;
-            switch (forest->items[i]->type) {
+            switch (forestPtr->items[i]->type) {
                 case AVL:
-                    rootVal = GetNodeValue(AVLRoot(forest->items[i]->root));
+                    rootVal = GetNodeValue(AVLRoot(forestPtr->items[i]->root));
                     break;
                 case BST:
-                    rootVal = GetNodeValue(Root(forest->items[i]->root));
+                    rootVal = GetNodeValue(Root(forestPtr->items[i]->root));
                     break;
                 case SPL:
-                    SplayTreeADT SPLroot = forest->items[i]->root;
+                    SplayTreeADT SPLroot = forestPtr->items[i]->root;
                     rootVal = SPLroot->val;
                     break;
                 case RBT:
-                    RedBlackTreeADT RBTroot = forest->items[i]->root;
+                    RedBlackTreeADT RBTroot = forestPtr->items[i]->root;
                     rootVal = RBTroot->val;
                     break;
                 default:
                     assert(false && "UNREACHABLE");
                     break;
             }
-            printf("Trees(%zu) is a %s with Node(%d) as root\n", i, treetype2string(forest->items[i]->type), rootVal);
+            printf("Tree %zu is a %s with node %d as root\n", i, treetype2string(forestPtr->items[i]->type), rootVal);
         }
     }
 }
 
-void runSearch(ForestPtr forest) {
-    int index, val;
-    if (!readAndParseSubcommandToInt(&index, SEARCH) || !readAndParseSubcommandToInt(&val, SEARCH)) return;
-    if (index >= forest->count) {
-        printError("Tree with index %d not found\n", index);
-        return;
-    }
-
+void runSearch(ForestPtr forestPtr, size_t index, int val) {
     bool found;
     assert(TREE_TYPE_NUMBER == 4 && "HAVE NOT EXHAUST ALL TREE TYPES");
-    switch (forest->items[index]->type) {
+    switch (forestPtr->items[index]->type) {
         case BST:
-            found = IsNodeExist(forest->items[index]->root, val);
+            found = IsNodeExist(forestPtr->items[index]->root, val);
             break;
         case AVL:
-            found = AVL_IsNodeExist(forest->items[index]->root, val);
+            found = AVL_IsNodeExist(forestPtr->items[index]->root, val);
             break;
         case SPL:
-            forest->items[index]->root = Splay_Find(forest->items[index]->root, val, &found);
+            forestPtr->items[index]->root = Splay_Find(forestPtr->items[index]->root, val, &found);
             break;
         case RBT:
-            todo("RBT search");
+            found = Red_Black_Find(forestPtr->items[index]->root, val);
             break;
         default:
             assert(false && "UNREACHABLE");
             break;
     }
     if (found)
-        printf("[INFO] Node(%d) exists in Tree(%d)\n", val, index);
+        printInfo("Node %d exists in tree %zu\n", val, index);
     else
-        printf("[INFO] Node(%d) does not exist in Tree(%d)\n", val, index);
+        printInfo("Node %d does not exist in tree %zu\n", val, index);
 }
 
 static bool loadSPL(ForestPtr forest, int count) {
