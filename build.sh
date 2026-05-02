@@ -2,16 +2,21 @@
 CC=gcc
 CFLAGS="-Wall -Wextra"
 
-while getopts "rc:" FLAG; do
+if ! $CC *.c ./ADTs/*.c -o treeSimulator $CFLAGS -g ;then
+    exit 1
+fi
+
+while getopts "is:" FLAG; do
     case "$FLAG" in 
-    r)
-        $CC Simulator.c Util.c Commands.c ./ADTs/*.c -o treeSimulator $CFLAGS && ./treeSimulator simulate
+    i)
+        ./treeSimulator interpret
+        break
         ;;
-    c)
-        $CC Simulator.c Util.c Commands.c ./ADTs/*.c -o treeSimulator $CFLAGS && ./treeSimulator compile $OPTARG
+    s)
+        ./treeSimulator simulate $OPTARG
+        break
         ;;
     *)
-        $CC Simulator.c Util.c Commands.c ./ADTs/*.c -o treeSimulator $CFLAGS
         ;;
     esac
 done

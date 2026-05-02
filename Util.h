@@ -1,7 +1,6 @@
 #ifndef UTIL_H_
 #define UTIL_H_
 #include <stdbool.h>
-#include "Simulator.h"
 #include "Type.h"
 
 

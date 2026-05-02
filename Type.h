@@ -1,6 +1,7 @@
 #ifndef TYPE_H_
 #define TYPE_H_
 #include <stdlib.h>
+#include "ADTs/Tree.h"
 typedef enum {
     QUIT = 0,
     HELP,
@@ -24,22 +25,6 @@ typedef enum {
     SUBCOMMAND_NUMBER,
     UNKNOWN_SUBCOMMAND = 999
 } Subcommand;
-
-typedef enum {
-    BST = 0,
-    AVL,
-    SPL,
-    RBT,
-    TREE_TYPE_NUMBER,
-    UNKNOWN_TREE_TYPE = 999
-} TreeType;
-
-typedef struct {
-    TreeType type;
-    void* root;
-} Tree;
-
-typedef Tree* TreePtr;
 
 typedef enum {
     YELLOW = 0,

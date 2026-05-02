@@ -7,6 +7,7 @@
 #include "ADTs/BinarySearchTree.h"
 #include "ADTs/RedBlackTree.h"
 #include "ADTs/SplayTree.h"
+#include "ADTs/Tree.h"
 #include "Util.h"
 
 void runHelp(char* manualPage) {
@@ -125,24 +126,28 @@ void runTraversal(ForestPtr forest) {
 }
 
 void runInsert(ForestPtr forestPtr, size_t index, int val) {
-    assert(TREE_TYPE_NUMBER == 4 && "HAVE NOT EXHAUST ALL TREE TYPES");
-    switch (forestPtr->items[index]->type) {
-        case AVL:
-            forestPtr->items[index]->root = AVLInsertNode(NewTreeNode(val), forestPtr->items[index]->root);
-            break;
-        case BST:
-            forestPtr->items[index]->root = InsertNode(forestPtr->items[index]->root, NewTreeNode(val));
-            break;
-        case SPL:
-            forestPtr->items[index]->root = Splay_Insert(forestPtr->items[index]->root, val);
-            break;
-        case RBT:
-            forestPtr->items[index]->root = Red_Black_Insert(forestPtr->items[index]->root, val);
-            break;
-        default:
-            assert(false && "UNREACHABLE");
-            break;
-    }
+    TreePtr treePtr = forestPtr->items[index];
+    treePtr->root = treePtr->ops->insert(treePtr->root, val);    
+
+
+    // assert(TREE_TYPE_NUMBER == 4 && "HAVE NOT EXHAUST ALL TREE TYPES");
+    // switch (forestPtr->items[index]->type) {
+    //     case AVL:
+    //         forestPtr->items[index]->root = AVLInsertNode(NewTreeNode(val), forestPtr->items[index]->root);
+    //         break;
+    //     case BST:
+    //         forestPtr->items[index]->root = InsertNode(forestPtr->items[index]->root, NewTreeNode(val));
+    //         break;
+    //     case SPL:
+    //         forestPtr->items[index]->root = Splay_Insert(forestPtr->items[index]->root, val);
+    //         break;
+    //     case RBT:
+    //         forestPtr->items[index]->root = Red_Black_Insert(forestPtr->items[index]->root, val);
+    //         break;
+    //     default:
+    //         assert(false && "UNREACHABLE");
+    //         break;
+    // }
     printf("[INFO] Node %d is inserted in tree %zu.\n", val, index);
 }
 
@@ -344,12 +349,10 @@ void runNew(ForestPtr forestPtr, TreeType treeType) {
             forestPtr->items[index]->root = EmptyBinaryTree();
             break;
         case SPL:
-            forestPtr->items[index]->type = SPL;
-            forestPtr->items[index]->root = NULL;
+            forestPtr->items[index] = tree_init(SPL);
             break;
         case RBT:
-            forestPtr->items[index]->type = RBT;
-            forestPtr->items[index]->root = NULL;
+            forestPtr->items[index] = tree_init(RBT);
             break;
         default:
             assert(false && "UNREACHABLE");
