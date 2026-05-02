@@ -16,6 +16,9 @@ Modified Commands:
 - SEARCH\
     SEARCH command for red black tree is implemented.
 
+Deprecated Commands:
+- LOAD_TREE: Equivalent to call NEW on existing tree.
+
 ## v5.0.0
 Dynamic array is used as memory allocation system for trees.
 

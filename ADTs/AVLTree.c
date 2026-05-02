@@ -1,124 +1,103 @@
 #include "AVLTree.h"
+#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-AVLTreeADT EmptyAVLTree() {
-    return NULL;
+static int height(AVLTreeADT t) {
+    return t ? t->height : -1;
 }
-AVLTreeADT NonemptyAVLTree(TreeNodeADT N,
-                           AVLTreeADT L, AVLTreeADT R) {
-    // printf("DEBUG: Executing NonemptyAVLTree\n");
-    AVLTreeADT t = malloc(sizeof(*t));
-    t->rt = N;
-    t->lst = L;
-    t->rst = R;
-    // printf("DEBUG: t = %p\n", t);
+
+static AVLTreeADT new_node(int val) {
+    AVLTreeADT n = malloc(sizeof(*n));
+    if (!n) exit(EXIT_FAILURE);
+    n->val = val;
+    n->height = 0;
+    n->l = NULL;
+    n->r = NULL;
+    return n;
+}
+
+static void update_height(AVLTreeADT t) {
+    if (t) {
+        t->height = max(height(t->l), height(t->r)) + 1;
+    }
+}
+
+static int balance_factor(AVLTreeADT t) {
+    return t ? height(t->l) - height(t->r) : 0;
+}
+
+static AVLTreeADT right_rotate(AVLTreeADT t) {
+    AVLTreeADT x = t->l;
+    AVLTreeADT T2 = x->r;
+
+    x->r = t;
+    t->l = T2;
+
+    update_height(t);
+    update_height(x);
+    return x;
+}
+
+static AVLTreeADT left_rotate(AVLTreeADT t) {
+    AVLTreeADT y = t->r;
+    AVLTreeADT T2 = y->l;
+
+    y->l = t;
+    t->r = T2;
+
+    update_height(t);
+    update_height(y);
+    return y;
+}
+
+static AVLTreeADT left_right_rotate(AVLTreeADT t) {
+    t->l = left_rotate(t->l);
+    return right_rotate(t);
+}
+
+static AVLTreeADT right_left_rotate(AVLTreeADT t) {
+    t->r = right_rotate(t->r);
+    return left_rotate(t);
+}
+
+AVLTreeADT AVL_Insert(AVLTreeADT t, int val) {
+    if (t == NULL) return new_node(val);
+
+    if (val < t->val) {
+        t->l = AVL_Insert(t->l, val);
+    } else if (val > t->val) {
+        t->r = AVL_Insert(t->r, val);
+    } else {
+        return t;
+    }
+
+    update_height(t);
+
+    int bf = balance_factor(t);
+
+    if (bf > 1 && val < t->l->val) return right_rotate(t);       /* LL */
+    if (bf < -1 && val > t->r->val) return left_rotate(t);       /* RR */
+    if (bf > 1 && val > t->l->val) return left_right_rotate(t);  /* LR */
+    if (bf < -1 && val < t->r->val) return right_left_rotate(t); /* RL */
+
     return t;
 }
 
-TreeNodeADT AVLRoot(AVLTreeADT t) {
-    if (AVLTreeIsEmpty(t)) exit(EXIT_FAILURE);
-    return t->rt;
-}
-
-AVLTreeADT LeftAVLSubtree(AVLTreeADT t) {
-    if (AVLTreeIsEmpty(t)) exit(EXIT_FAILURE);
-    return t->lst;
-}
-
-AVLTreeADT RightAVLSubtree(AVLTreeADT t) {
-    if (AVLTreeIsEmpty(t)) exit(EXIT_FAILURE);
-    return t->rst;
-}
-
-int AVLTreeIsEmpty(AVLTreeADT t) {
-    return t == NULL;
-}
-
-int AVLTreeHeight(AVLTreeADT t) {
-    if(t == NULL) return -1;
-    return AVLTreeHeight(t->lst) > AVLTreeHeight(t->rst)? AVLTreeHeight(t->lst)+1: AVLTreeHeight(t->rst)+1;
-}
-
-AVLTreeADT LeftRotate(AVLTreeADT t) {
-    return NonemptyAVLTree(
-        AVLRoot(RightAVLSubtree(t)),
-        NonemptyAVLTree(
-            AVLRoot(t),
-            LeftAVLSubtree(t),
-            LeftAVLSubtree(RightAVLSubtree(t))
-        ),
-        RightAVLSubtree(RightAVLSubtree(t))
-    );
-}
-
-AVLTreeADT RightRotate(AVLTreeADT t) {
-    return NonemptyAVLTree(
-        AVLRoot(LeftAVLSubtree(t)),
-        LeftAVLSubtree(LeftAVLSubtree(t)),
-        NonemptyAVLTree(
-            AVLRoot(t),
-            RightAVLSubtree(LeftAVLSubtree(t)),
-            RightAVLSubtree(t)
-        )
-    );
-}
-
-AVLTreeADT LeftRightRotate(AVLTreeADT t) {
-    return RightRotate(
-        NonemptyAVLTree(
-            AVLRoot(t),
-            LeftRotate(LeftAVLSubtree(t)),
-            RightAVLSubtree(t)
-        )
-    );
-}
-
-AVLTreeADT RightLeftRotate(AVLTreeADT t) {
-    return LeftRotate(
-        NonemptyAVLTree(
-            AVLRoot(t),
-            LeftAVLSubtree(t),
-            RightRotate(RightAVLSubtree(t))
-        )
-    );
-}
-
-AVLTreeADT AVLInsertNode(TreeNodeADT X, AVLTreeADT T) {
-    // printf("DEBUG: Executing AVLInsertNode\n");
-    if (AVLTreeIsEmpty(T))
-        return NonemptyAVLTree(X, EmptyAVLTree(), EmptyAVLTree());
-    int sign = GetNodeValue(X) - GetNodeValue(AVLRoot(T));
-    if (sign < 0) {
-        AVLTreeADT NewTree = NonemptyAVLTree(AVLRoot(T),
-                                             AVLInsertNode(X, LeftAVLSubtree(T)),
-                                             RightAVLSubtree(T));
-        if (AVLTreeHeight(LeftAVLSubtree(NewTree)) - AVLTreeHeight(RightAVLSubtree(NewTree)) == 2)
-            return (GetNodeValue(X) -
-                           GetNodeValue(AVLRoot(LeftAVLSubtree(NewTree)))) < 0 ?
-                        RightRotate(NewTree) :
-                        LeftRightRotate(NewTree);
-        return NewTree;
-    }
-    if (sign > 0) {
-        AVLTreeADT NewTree = NonemptyAVLTree(AVLRoot(T),
-                                             LeftAVLSubtree(T),
-                                             AVLInsertNode(X, RightAVLSubtree(T)));
-
-        if (AVLTreeHeight(RightAVLSubtree(NewTree)) - AVLTreeHeight(LeftAVLSubtree(NewTree)) == 2)
-            return (GetNodeValue(X) -
-                           GetNodeValue(AVLRoot(RightAVLSubtree(NewTree)))) > 0 ?
-                        LeftRotate(NewTree) :
-                        RightLeftRotate(NewTree);
-        return NewTree;
-    }
-    return NonemptyAVLTree(X, LeftAVLSubtree(T), RightAVLSubtree(T));
-}
-
-bool AVL_IsNodeExist(AVLTreeADT t, int k) {
-    if (AVLTreeIsEmpty(t)) return false;
-    int sign = k-GetNodeValue(AVLRoot(t));
-    if(sign < 0) return AVL_IsNodeExist(LeftAVLSubtree(t), k);
-    if(sign > 0) return AVL_IsNodeExist(RightAVLSubtree(t), k);
+bool AVL_Find(AVLTreeADT t, int val) {
+    if (t == NULL) return false;
+    if (val < t->val) return AVL_Find(t->l, val);
+    if (val > t->val) return AVL_Find(t->r, val);
     return true;
+}
+
+static void avl_print_inorder(AVLTreeADT t) {
+    if (t == NULL) return;
+    avl_print_inorder(t->l);
+    printf("%d ", t->val);
+    avl_print_inorder(t->r);
+}
+
+void AVL_Print(AVLTreeADT t) {
+    avl_print_inorder(t);
+    printf("\n");
 }

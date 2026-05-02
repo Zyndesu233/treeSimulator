@@ -1,9 +1,17 @@
 #include "Util.h"
 #include <assert.h>
+#include <ctype.h>
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+
+// void toLower(char* str) {
+//     int i = 0;
+//     for (int i = 0; i < strlen(str); i++) {
+//         str[i] = tolower(str[i]);
+//     }
+// }
 
 /**
  * @name string2command
@@ -13,7 +21,7 @@
  */
 
 Command string2command(char* command) {
-    assert(COMMAND_NUMBER == 11 && "HAVE NOT EXHAUST ALL COMMAND");
+    assert(COMMAND_NUMBER == 10 && "HAVE NOT EXHAUST ALL COMMAND");
     if (strcmp(command, "quit") == 0 || strcmp(command, "q") == 0)
         return QUIT;
     else if (strcmp(command, "help") == 0 || strcmp(command, "h") == 0)
@@ -34,8 +42,6 @@ Command string2command(char* command) {
         return DUMP_FOREST;
     else if (strcmp(command, "search") == 0 || strcmp(command, "s") == 0)
         return SEARCH;
-    else if (strcmp(command, "load_tree") == 0 || strcmp(command, "lt") == 0)
-        return LOAD_TREE;
     return UNKNOWN_COMMAND;
 }
 
@@ -46,7 +52,7 @@ Command string2command(char* command) {
  * @return {char*} The corresponding string
  */
 char* command2string(Command command) {
-    assert(COMMAND_NUMBER == 11 && "HAVE NOT EXHAUST ALL COMMAND");
+    assert(COMMAND_NUMBER == 10 && "HAVE NOT EXHAUST ALL COMMAND");
     switch (command) {
         case QUIT:
             return "quit";
@@ -68,8 +74,6 @@ char* command2string(Command command) {
             return "dump_trees";
         case SEARCH:
             return "search";
-        case LOAD_TREE:
-            return "load_tree";
         default:
             return "unknown";
     }
@@ -160,7 +164,7 @@ void setFontColor(FontColor color) {
  * @param {Command} command The command name
  */
 void printCommandFormat(Command command) {
-    assert(COMMAND_NUMBER == 11 && "HAVE NOT EXHAUST ALL COMMAND");
+    assert(COMMAND_NUMBER == 10 && "HAVE NOT EXHAUST ALL COMMAND");
     switch (command) {
         case QUIT:
             printf("[q]uit\n");
@@ -187,13 +191,10 @@ void printCommandFormat(Command command) {
             printf("[n]ew <tree_type:str>\n");
             break;
         case DUMP_FOREST:
-            printf("[d]ump_[t]rees\n");
+            printf("[d]ump_[f]orest\n");
             break;
         case SEARCH:
             printf("[s]earch <index:int> <value:int>\n");
-            break;
-        case LOAD_TREE:
-            printf("[l]oad_[t]ree <type:str> <node_count:int> (<tree_format> ...)\n");
             break;
         default:
             assert(false && "UNREACHABLE");

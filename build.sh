@@ -6,10 +6,10 @@ if ! $CC *.c ./ADTs/*.c -o treeSimulator $CFLAGS -g ;then
     exit 1
 fi
 
-while getopts "is:" FLAG; do
+while getopts "rs:" FLAG; do
     case "$FLAG" in 
-    i)
-        ./treeSimulator interpret
+    r)
+        ./treeSimulator repl
         break
         ;;
     s)

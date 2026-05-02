@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "Interpreter.h"
+#include "REPL.h"
 #include "Simulator.h"
 #include "Util.h"
 
@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
 
     Forest forest = {0};
 
-    if (strcmp(argv[1], "interpret") == 0) {
+    if (strcmp(argv[1], "repl") == 0) {
         interpret(&forest);
         return 0;
     }

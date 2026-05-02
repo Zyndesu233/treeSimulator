@@ -1,22 +1,19 @@
 #ifndef AVL_TREE_H_
 #define AVL_TREE_H_
-#include "TreeNode.h"
-#include <stdio.h> 
-typedef struct AVLTreeCDT *AVLTreeADT; 
 
-AVLTreeADT NonemptyAVLTree(TreeNodeADT, AVLTreeADT, AVLTreeADT); 
-AVLTreeADT EmptyAVLTree(void); 
-AVLTreeADT LeftAVLSubtree(AVLTreeADT); 
-AVLTreeADT RightAVLSubtree(AVLTreeADT); 
-int AVLTreeIsEmpty(AVLTreeADT); 
-int AVLTreeHeight(AVLTreeADT); 
-TreeNodeADT AVLRoot(AVLTreeADT); 
-AVLTreeADT AVLInsertNode(TreeNodeADT, AVLTreeADT);
-bool AVL_IsNodeExist(AVLTreeADT, int);
+#include "Tree.h"
+#include <stdbool.h>
+
+typedef struct AVLTreeCDT* AVLTreeADT;
 
 struct AVLTreeCDT {
-    TreeNodeADT rt;
-    AVLTreeADT lst, rst;
+    int val;
+    int height;
+    AVLTreeADT l, r;
 };
+
+AVLTreeADT AVL_Insert(AVLTreeADT t, int val);
+bool AVL_Find(AVLTreeADT t, int val);
+void AVL_Print(AVLTreeADT t);
 
 #endif

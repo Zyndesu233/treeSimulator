@@ -23,7 +23,7 @@ typedef TreeOps* TreeOpsPtr;
 typedef struct {
     TreeType type;
     void* root;
-    const TreeOpsPtr ops;
+    TreeOpsPtr ops;
 } Tree;
 
 typedef Tree* TreePtr;

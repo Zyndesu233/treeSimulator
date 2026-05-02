@@ -1,4 +1,4 @@
-#include "Interpreter.h"
+#include "REPL.h"
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -17,7 +17,7 @@ void interpret(ForestPtr forestPtr) {
         if (strcmp(inputBuffer, "\n") == 0) continue;
         char* command = strtok(inputBuffer, " \n");
 
-        assert(COMMAND_NUMBER == 11);
+        assert(COMMAND_NUMBER == 10);
         switch (string2command(command)) {
             case QUIT: {
                 printInfo("Exit.\n");
@@ -97,9 +97,6 @@ void interpret(ForestPtr forestPtr) {
                 runSearch(forestPtr, index, val);
                 break;
             }
-            case LOAD_TREE:
-                runLoadTree(forestPtr);
-                break;
             default:
                 printError("Unknown command.\n");
                 printf("Use [h]elp command to display command list.\n");

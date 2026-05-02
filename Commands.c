@@ -128,26 +128,6 @@ void runTraversal(ForestPtr forest) {
 void runInsert(ForestPtr forestPtr, size_t index, int val) {
     TreePtr treePtr = forestPtr->items[index];
     treePtr->root = treePtr->ops->insert(treePtr->root, val);    
-
-
-    // assert(TREE_TYPE_NUMBER == 4 && "HAVE NOT EXHAUST ALL TREE TYPES");
-    // switch (forestPtr->items[index]->type) {
-    //     case AVL:
-    //         forestPtr->items[index]->root = AVLInsertNode(NewTreeNode(val), forestPtr->items[index]->root);
-    //         break;
-    //     case BST:
-    //         forestPtr->items[index]->root = InsertNode(forestPtr->items[index]->root, NewTreeNode(val));
-    //         break;
-    //     case SPL:
-    //         forestPtr->items[index]->root = Splay_Insert(forestPtr->items[index]->root, val);
-    //         break;
-    //     case RBT:
-    //         forestPtr->items[index]->root = Red_Black_Insert(forestPtr->items[index]->root, val);
-    //         break;
-    //     default:
-    //         assert(false && "UNREACHABLE");
-    //         break;
-    // }
     printf("[INFO] Node %d is inserted in tree %zu.\n", val, index);
 }
 
@@ -304,7 +284,7 @@ void runDelete(ForestPtr forest) {
     int index, val;
     if (!readAndParseSubcommandToInt(&index, DELETE) || !readAndParseSubcommandToInt(&val, DELETE)) return;
 
-    if (index >= forest->count) {
+    if ((size_t)index >= forest->count) {
         printError("Tree with index %d not found\n", index);
         return;
     }
@@ -421,102 +401,4 @@ void runSearch(ForestPtr forestPtr, size_t index, int val) {
         printInfo("Node %d exists in tree %zu\n", val, index);
     else
         printInfo("Node %d does not exist in tree %zu\n", val, index);
-}
-
-static bool loadSPL(ForestPtr forest, int count) {
-    da_append(*forest, malloc(sizeof(TreePtr)));
-    int index = forest->count - 1;
-    forest->items[index]->type = RBT;
-
-    int arr[MAX_INT_INPUT_CNT] = {0};
-    if (!readAndParseSubcommandsToInts(count, arr, LOAD_TREE)) return false;
-    SplayTreeADT nodes[100] = {NULL};
-    for (int i = 0; i < count; i++) {
-        if (arr[i] != -1) {
-            nodes[i] = malloc(sizeof(*nodes[i]));
-            nodes[i]->val = arr[i];
-            nodes[i]->l = nodes[i]->r = nodes[i]->p = NULL;
-
-            if (i > 0) {
-                int pIndex = (i - 1) / 2;
-                nodes[i]->p = nodes[pIndex];
-                if (i % 2 == 1)
-                    nodes[pIndex]->l = nodes[i];
-                else
-                    nodes[pIndex]->r = nodes[i];
-            }
-        }
-    }
-    forest->items[index]->root = nodes[0];
-    return true;
-}
-
-static bool loadRBT(ForestPtr forest, int count) {
-    da_append(*forest, malloc(sizeof(TreePtr)));
-    int index = forest->count - 1;
-    forest->items[index]->type = RBT;
-
-    char* buf;
-    int value[MAX_INT_INPUT_CNT] = {0};
-    bool isRed[MAX_INT_INPUT_CNT] = {0};
-    for (int i = 0; i < count; i++) {
-        if (!readAndParseSubcommandToInt(&value[i], LOAD_TREE)) return false;
-        if (!readSubcommand(&buf, LOAD_TREE)) return false;
-        if (strcmp(buf, "r") == 0)
-            isRed[i] = true;
-        else if (strcmp(buf, "b") == 0 || value[i] == -1)
-            isRed[i] = false;
-        else {
-            printError("Unknown tree type");
-            return false;
-        }
-    }
-    RedBlackTreeADT nodes[100] = {NULL};
-    for (int i = 0; i < count; i++) {
-        if (value[i] != -1) {
-            nodes[i] = malloc(sizeof(*nodes[i]));
-            nodes[i]->val = value[i];
-            nodes[i]->isRed = isRed[i];
-            nodes[i]->l = nodes[i]->r = nodes[i]->p = NULL;
-
-            if (i > 0) {
-                int pIndex = (i - 1) / 2;
-                nodes[i]->p = nodes[pIndex];
-                if (i % 2 == 1)
-                    nodes[pIndex]->l = nodes[i];
-                else
-                    nodes[pIndex]->r = nodes[i];
-            }
-        }
-    }
-    forest->items[index]->root = nodes[0];
-    return true;
-}
-
-void runLoadTree(ForestPtr forestPtr) {
-    TreeType treeType;
-    int count;
-
-    if (!readAndParseSubcommandToTreeType(&treeType, LOAD_TREE)) return;
-    if (!readAndParseSubcommandToInt(&count, LOAD_TREE)) return;
-
-    switch (treeType) {
-        case AVL:
-            todo("AVL load_tree");
-            break;
-        case BST:
-            todo("BST load_tree");
-            break;
-        case SPL:
-            if (!loadSPL(forestPtr, count)) return;
-            break;
-        case RBT:
-            if (!loadRBT(forestPtr, count)) return;
-            break;
-        default:
-            assert(false && "UNREACHABLE");
-            break;
-    }
-
-    printf("[INFO] %d nodes is loaded to %s with index %zu.\n", count, treetype2string(treeType), forestPtr->count - 1);
 }
