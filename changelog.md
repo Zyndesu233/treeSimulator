@@ -1,8 +1,13 @@
 # Todos
 - Support B-trees
-- Compile mode for checking
+- Simulate mode
+- Make it OOP
 
 # Change Log
+## v5.2.0
+Deprecated Commands:
+- LOAD_TREE: Equivalent to call INSERT in particular order.
+
 ## v5.1.0
 Factor out input handling from command simulation.
 

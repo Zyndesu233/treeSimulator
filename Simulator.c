@@ -14,8 +14,8 @@ int main(int argc, char** argv) {
     Forest forest = {0};
     char line[100];
 
-    if (strcmp(argv[1], "simulate") == 0) {
-        printWelcomeMsg("5.1.0");
+    if (strcmp(argv[1], "REPL") == 0) {
+        printWelcomeMsg("5.2.0");
 
         while (true) {
             printf("> ");
@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
             if (strcmp(line, "\n") == 0) continue;
             char* command = strtok(line, " \n");
 
-            assert(COMMAND_NUMBER == 11);
+            assert(COMMAND_NUMBER == 10 && "HAVE NOT EXHAUST ALL COMMAND");
             switch (string2command(command)) {
                 case QUIT: {
                     printInfo("Exit.\n");
@@ -104,9 +104,6 @@ int main(int argc, char** argv) {
                     runSearch(&forest, index, val);
                     break;
                 }
-                case LOAD_TREE:
-                    runLoadTree(&forest);
-                    break;
                 default:
                     printError("Unknown command.\n");
                     printf("Use [h]elp command to display command list.\n");
@@ -114,9 +111,9 @@ int main(int argc, char** argv) {
             }
             printf("\n");
         }
-    } else if (strcmp(argv[1], "compile") == 0) {
+    } else if (strcmp(argv[1], "simulate") == 0) {
         printInfo("Parsing %s\n", argv[2]);
-        todo("Compile mode\n");
+        todo("Simulate mode\n");
     } else {
         printWarning("Unknown subcommand\n");
     }

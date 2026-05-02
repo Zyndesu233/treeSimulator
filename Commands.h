@@ -11,5 +11,4 @@ void runTraversal(ForestPtr forestPtr);
 void runNew(ForestPtr forestPtr, TreeType treeType);
 void runDumpForest(ForestPtr forestPtr);
 void runSearch(ForestPtr forestPtr, size_t index, int val);
-void runLoadTree(ForestPtr forestPtr);
 #endif

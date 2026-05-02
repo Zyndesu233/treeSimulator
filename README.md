@@ -1,6 +1,8 @@
 # Tree Simulator
 A tree simulator written in C aim for visualize different tree abstract data type.
 
+Two modes are (planned) supported: REPL mode and simulate mode.
+
 Now supports binary search trees, AVL trees, splay trees and red black trees.
 
 Some functions are not yet implemented. Pull requests are welcomed.
@@ -11,14 +13,14 @@ Some functions are not yet implemented. Pull requests are welcomed.
 ./build.sh
 ```
 
-### Run as simulator
+### Run in REPL mode
 ```bash
 ./build.sh -r
 ```
 
-### Run with input file
+### Simulate a file input
 ```bash
-./build -c inputFile
+./build.sh -s inputFile
 ```
 
 ## How to get started?

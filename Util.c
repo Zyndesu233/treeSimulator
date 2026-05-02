@@ -13,29 +13,27 @@
  */
 
 Command string2command(char* command) {
-    assert(COMMAND_NUMBER == 11 && "HAVE NOT EXHAUST ALL COMMAND");
+    assert(COMMAND_NUMBER == 10 && "HAVE NOT EXHAUST ALL COMMAND");
     if (strcmp(command, "quit") == 0 || strcmp(command, "q") == 0)
         return QUIT;
-    else if (strcmp(command, "help") == 0 || strcmp(command, "h") == 0)
+    if (strcmp(command, "help") == 0 || strcmp(command, "h") == 0)
         return HELP;
-    else if (strcmp(command, "insert") == 0 || strcmp(command, "i") == 0)
+    if (strcmp(command, "insert") == 0 || strcmp(command, "i") == 0)
         return INSERT;
-    else if (strcmp(command, "insert_many") == 0 || strcmp(command, "im") == 0)
+    if (strcmp(command, "insert_many") == 0 || strcmp(command, "im") == 0)
         return INSERT_MANY;
-    else if (strcmp(command, "print") == 0 || strcmp(command, "p") == 0)
+    if (strcmp(command, "print") == 0 || strcmp(command, "p") == 0)
         return PRINT;
-    else if (strcmp(command, "delete") == 0 || strcmp(command, "d") == 0)
+    if (strcmp(command, "delete") == 0 || strcmp(command, "d") == 0)
         return DELETE;
-    else if (strcmp(command, "traversal") == 0 || strcmp(command, "t") == 0)
+    if (strcmp(command, "traversal") == 0 || strcmp(command, "t") == 0)
         return TRAVERSAL;
-    else if (strcmp(command, "new") == 0 || strcmp(command, "n") == 0)
+    if (strcmp(command, "new") == 0 || strcmp(command, "n") == 0)
         return NEW;
-    else if (strcmp(command, "dump_forest") == 0 || strcmp(command, "df") == 0)
+    if (strcmp(command, "dump_forest") == 0 || strcmp(command, "df") == 0)
         return DUMP_FOREST;
-    else if (strcmp(command, "search") == 0 || strcmp(command, "s") == 0)
+    if (strcmp(command, "search") == 0 || strcmp(command, "s") == 0)
         return SEARCH;
-    else if (strcmp(command, "load_tree") == 0 || strcmp(command, "lt") == 0)
-        return LOAD_TREE;
     return UNKNOWN_COMMAND;
 }
 
@@ -46,7 +44,7 @@ Command string2command(char* command) {
  * @return {char*} The corresponding string
  */
 char* command2string(Command command) {
-    assert(COMMAND_NUMBER == 11 && "HAVE NOT EXHAUST ALL COMMAND");
+    assert(COMMAND_NUMBER == 10 && "HAVE NOT EXHAUST ALL COMMAND");
     switch (command) {
         case QUIT:
             return "quit";
@@ -68,8 +66,6 @@ char* command2string(Command command) {
             return "dump_trees";
         case SEARCH:
             return "search";
-        case LOAD_TREE:
-            return "load_tree";
         default:
             return "unknown";
     }
@@ -79,9 +75,9 @@ Subcommand hashSubcommand(char* subcommand) {
     assert(SUBCOMMAND_NUMBER == 3);
     if (strcmp(subcommand, "in-order") == 0 || strcmp(subcommand, "in") == 0)
         return IN_ORDER;
-    else if (strcmp(subcommand, "pre-order") == 0 || strcmp(subcommand, "pre") == 0)
+    if (strcmp(subcommand, "pre-order") == 0 || strcmp(subcommand, "pre") == 0)
         return PRE_ORDER;
-    else if (strcmp(subcommand, "post-order") == 0 || strcmp(subcommand, "post") == 0)
+    if (strcmp(subcommand, "post-order") == 0 || strcmp(subcommand, "post") == 0)
         return POST_ORDER;
     return UNKNOWN_SUBCOMMAND;
 }
@@ -96,11 +92,11 @@ TreeType string2treetype(char* treeType) {
     assert(TREE_TYPE_NUMBER == 4);
     if (strcmp(treeType, "binary_search_tree") == 0 || strcmp(treeType, "bst") == 0)
         return BST;
-    else if (strcmp(treeType, "avl_tree") == 0 || strcmp(treeType, "avl") == 0)
+    if (strcmp(treeType, "avl_tree") == 0 || strcmp(treeType, "avl") == 0)
         return AVL;
-    else if (strcmp(treeType, "splay_tree") == 0 || strcmp(treeType, "spl") == 0)
+    if (strcmp(treeType, "splay_tree") == 0 || strcmp(treeType, "spl") == 0)
         return SPL;
-    else if (strcmp(treeType, "red_black_tree") == 0 || strcmp(treeType, "rbt") == 0)
+    if (strcmp(treeType, "red_black_tree") == 0 || strcmp(treeType, "rbt") == 0)
         return RBT;
     return UNKNOWN_TREE_TYPE;
 }
@@ -160,7 +156,7 @@ void setFontColor(FontColor color) {
  * @param {Command} command The command name
  */
 void printCommandFormat(Command command) {
-    assert(COMMAND_NUMBER == 11 && "HAVE NOT EXHAUST ALL COMMAND");
+    assert(COMMAND_NUMBER == 10 && "HAVE NOT EXHAUST ALL COMMAND");
     switch (command) {
         case QUIT:
             printf("[q]uit\n");
@@ -187,13 +183,10 @@ void printCommandFormat(Command command) {
             printf("[n]ew <tree_type:str>\n");
             break;
         case DUMP_FOREST:
-            printf("[d]ump_[t]rees\n");
+            printf("[d]ump_[f]orest\n");
             break;
         case SEARCH:
             printf("[s]earch <index:int> <value:int>\n");
-            break;
-        case LOAD_TREE:
-            printf("[l]oad_[t]ree <type:str> <node_count:int> (<tree_format> ...)\n");
             break;
         default:
             assert(false && "UNREACHABLE");
