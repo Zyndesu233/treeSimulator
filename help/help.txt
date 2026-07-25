@@ -1,0 +1,14 @@
+help - show command documentation
+
+Usage:
+  help
+  help <command>
+  h
+  h <command>
+
+Examples:
+  help
+  help insert
+  h print
+
+Help pages are stored as text files under the help directory.

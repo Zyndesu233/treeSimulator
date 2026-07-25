@@ -1,0 +1,10 @@
+delete - delete a node
+
+Usage:
+  delete <tree_index> <value>
+  d <tree_index> <value>
+
+Example:
+  delete 0 42
+
+The command reports an error if the tree index is invalid or the value does not exist.

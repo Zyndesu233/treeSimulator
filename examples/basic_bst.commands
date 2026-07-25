@@ -1,0 +1,8 @@
+new bst
+im 0 3 1 2 3
+print 0
+find 0 2
+delete 0 2
+find 0 2
+print 0
+quit

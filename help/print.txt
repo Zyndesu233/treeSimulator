@@ -1,0 +1,17 @@
+print - display a tree
+
+Usage:
+  print <tree_index>
+  p <tree_index>
+
+Example:
+  print 0
+
+The display uses an original-style ASCII layout. Right children are printed above their parent and left children below it:
+
+  +-right
++-root
+  +-left
+
+Red-black tree red nodes are shown in red. Black nodes use the terminal default color.
+B-tree nodes print their keys as bracketed groups, for example `[10 20]`.

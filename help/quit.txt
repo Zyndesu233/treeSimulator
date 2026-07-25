@@ -1,0 +1,8 @@
+quit - exit the simulator
+
+Usage:
+  quit
+  q
+  exit
+
+The command exits the interactive REPL or stops reading a simulation file.

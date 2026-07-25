@@ -1,7 +1,0 @@
-[Info] Manual for quit
-
-FORMAT
-[q]uit
-
-DESCRIPTION
-Exit the simulator when used.

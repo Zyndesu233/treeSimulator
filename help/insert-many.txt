@@ -1,0 +1,13 @@
+insert-many - insert multiple nodes
+
+Usage:
+  insert-many <tree_index> <number_of_nodes> <values...>
+  insert_many <tree_index> <number_of_nodes> <values...>
+  im <tree_index> <number_of_nodes> <values...>
+
+Example:
+  im 0 3 1 2 3
+
+The number_of_nodes argument must exactly match the number of values that follow it.
+All values are validated before any insertion happens.
+Duplicate values are ignored and not counted as inserted.

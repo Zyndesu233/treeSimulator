@@ -1,1 +1,8 @@
-treeSimulator
+# Makefile
+build/
+bin/
+*.o
+*.dSYM/
+
+# Mac OS
+.DS_Store

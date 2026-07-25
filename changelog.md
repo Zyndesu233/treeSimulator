@@ -1,9 +1,7 @@
-# Todos
-- Support B-trees
-- Simulate mode
-- Make it OOP
-
 # Change Log
+## v6.0.0
+Asked AI to rewite the whole repo
+
 ## v5.2.0
 Deprecated Commands:
 - LOAD_TREE: Equivalent to call INSERT in particular order.

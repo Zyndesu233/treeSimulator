@@ -1,0 +1,15 @@
+Commands:
+  new|n <bst|avl|splay|rbt>        create a tree
+  new|n btree <min_degree>         create a B-tree
+  insert|i <tree_index> <value>    insert a node
+  insert-many|im <tree_index> <number_of_nodes> <values...>
+                                   insert multiple nodes
+  delete|d <tree_index> <value>    delete a node
+  find|f|search|s <tree_index> <value>
+                                   find a node
+  print|p <tree_index>             print a tree
+  dump                             list all trees
+  help|h [command]                 show this help or command detail
+  quit|q|exit                      leave the simulator
+
+Use help COMMAND for details, for example: help insert

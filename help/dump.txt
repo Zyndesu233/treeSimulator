@@ -1,0 +1,6 @@
+dump - list trees in the forest
+
+Usage:
+  dump
+
+The command prints the number of trees and a short summary for each tree, including type and root value when present.

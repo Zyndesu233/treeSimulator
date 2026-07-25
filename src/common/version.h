@@ -1,0 +1,7 @@
+#ifndef TREE_SIMULATOR_VERSION_H
+#define TREE_SIMULATOR_VERSION_H
+
+#define TREE_SIMULATOR_NAME "Tree Simulator"
+#define TREE_SIMULATOR_VERSION "6.0.0"
+
+#endif

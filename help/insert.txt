@@ -1,0 +1,10 @@
+insert - insert a node
+
+Usage:
+  insert <tree_index> <value>
+  i <tree_index> <value>
+
+Example:
+  insert 0 42
+
+The value must be a valid integer. Duplicate values are ignored and reported as warnings.

@@ -1,0 +1,12 @@
+find - search for a node
+
+Usage:
+  find <tree_index> <value>
+  f <tree_index> <value>
+  search <tree_index> <value>
+  s <tree_index> <value>
+
+Example:
+  find 0 42
+
+For splay trees, search splays the found node or last accessed node to the root.

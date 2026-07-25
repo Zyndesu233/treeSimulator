@@ -1,0 +1,17 @@
+new - create a tree
+
+Usage:
+  new <bst|avl|splay|rbt>
+  n <bst|avl|splay|rbt>
+  new btree <min_degree>
+  n btree <min_degree>
+
+Examples:
+  new bst
+  new avl
+  new splay
+  new rbt
+  new btree 2
+
+The new tree is stored in the forest and receives the next available index.
+B-tree minimum degree must be an integer >= 2. A minimum degree of 2 creates a 2-3-4 tree.

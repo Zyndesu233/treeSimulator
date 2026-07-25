@@ -1,4 +1,0 @@
-[Info] Manual for dump_trees
-FORMAT [d]ump_[f]orest
-
-DESCRIPTION Lists all currently initialized trees and their respective indices. This is useful for tracking which slots are occupied and what types of trees are active.

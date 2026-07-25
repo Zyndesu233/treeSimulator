@@ -1,0 +1,21 @@
+[INFO] A new binary search tree with index 0 is created.
+
+[INFO] Inserted 3 of 3 node(s) in tree 0.
+
+[INFO] Printing tree 0 (binary search tree).
+    +-3
+  +-2
++-1
+
+[INFO] Node 2 exists in tree 0.
+
+[INFO] Node 2 deleted in tree 0.
+
+[INFO] Node 2 does not exist in tree 0.
+
+[INFO] Printing tree 0 (binary search tree).
+  +-3
++-1
+
+[INFO] Exit.
+
